@@ -1,0 +1,96 @@
+/* 管理端全局样式 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ============================================================
+   设计令牌：医疗蓝 + 养老绿主题（温暖、专业、适老化）
+   ============================================================ */
+:root {
+  /* 品牌主色：医疗蓝 */
+  --ec-primary: #2e7cf6;
+  --ec-primary-light: #5a9bfa;
+  --ec-primary-lighter: #eaf2fe;
+  --ec-primary-dark: #1a63d8;
+
+  /* 行业辅助色：养老绿（健康/安全） */
+  --ec-green: #34b382;
+  --ec-green-light: #e8f7f1;
+
+  /* 语义色（柔和，避免过强刺激） */
+  --ec-warning: #f5a623;
+  --ec-warning-light: #fdf3e3;
+  --ec-danger: #f56c6c;
+  --ec-danger-light: #fdeaea;
+  --ec-purple: #8b7cf6;
+  --ec-purple-light: #f0eeff;
+  --ec-cyan: #22b8cf;
+  --ec-cyan-light: #e6f7fa;
+
+  /* 中性色 */
+  --ec-text-primary: #303845;
+  --ec-text-regular: #5c6675;
+  --ec-text-secondary: #8a93a3;
+  --ec-text-placeholder: #b6bcc8;
+  --ec-border: #e8ecf3;
+  --ec-bg-page: #f3f6fb;
+  --ec-bg-card: #ffffff;
+
+  /* 圆角与阴影 */
+  --ec-radius-sm: 6px;
+  --ec-radius-md: 10px;
+  --ec-radius-lg: 14px;
+  --ec-shadow-card: 0 2px 12px rgba(46, 90, 170, 0.06);
+  --ec-shadow-hover: 0 8px 24px rgba(46, 90, 170, 0.14);
+
+  /* Element Plus 主题覆写 */
+  --el-color-primary: var(--ec-primary);
+  --el-color-primary-light-3: #639df8;
+  --el-color-primary-light-5: #96bcfb;
+  --el-color-primary-light-7: #c3d8fd;
+  --el-color-primary-light-8: #d9e7fe;
+  --el-color-primary-light-9: var(--ec-primary-lighter);
+  --el-color-primary-dark-2: var(--ec-primary-dark);
+  --el-border-radius-base: 8px;
+}
+
+html,
+body,
+#app {
+  height: 100%;
+  font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Microsoft YaHei', Arial, sans-serif;
+  color: var(--ec-text-primary);
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* 页面通用卡片间距 */
+.page-card {
+  margin-bottom: 16px;
+}
+
+/* 工具条（筛选区）统一间距 */
+.toolbar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+/* 全局卡片视觉统一：圆角 + 柔和阴影 */
+.el-card {
+  border-radius: var(--ec-radius-lg);
+  border-color: var(--ec-border);
+  box-shadow: var(--ec-shadow-card);
+}
+
+/* 数字滚动（统计卡片） */
+.num-anim {
+  font-variant-numeric: tabular-nums;
+}

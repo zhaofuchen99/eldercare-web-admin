@@ -1,0 +1,89 @@
+/* ============================================================
+   侧边栏菜单主题（深蓝 + 医疗健康风格）
+   Element Plus Menu 的主题色由 CSS 变量驱动：
+   不传 background-color 属性时必须手动注入这些变量，
+   否则 --el-menu-bg-color 回落为默认白色（子菜单大面积白底的根因）。
+   ============================================================ */
+
+/* 侧栏配色令牌 */
+:root {
+  --sidebar-bg: #0f2238;        /* 侧边栏背景：深蓝 */
+  --sidebar-bg-deep: #0a1a2e;   /* 侧边栏底部渐变色 */
+  --submenu-bg: #16283d;        /* 子菜单背景：稍浅深蓝 */
+  --sidebar-text: #a7b4c9;      /* 默认文字：浅灰蓝 */
+  --sidebar-hover: rgba(255, 255, 255, 0.08); /* hover：透明高亮 */
+}
+
+/* 注入 Element Plus Menu 主题变量：一级/二级菜单背景、文字、hover 统一由此控制 */
+.aside .menu {
+  --el-menu-bg-color: var(--sidebar-bg);
+  --el-menu-text-color: var(--sidebar-text);
+  --el-menu-hover-text-color: #ffffff;
+  --el-menu-hover-bg-color: var(--sidebar-hover);
+  --el-menu-active-color: #ffffff;
+}
+
+/* 一级菜单 / 子菜单组标题：统一尺寸、圆角、间距 */
+.aside .menu .el-menu-item,
+.aside .menu .el-sub-menu__title {
+  height: 44px;
+  line-height: 44px;
+  margin-bottom: 4px;
+  border-radius: 8px;
+}
+
+/* 展开的子菜单容器：稍浅深蓝背景，禁止出现白色区域 */
+.aside .menu .el-menu--inline {
+  background-color: var(--submenu-bg);
+  border-radius: 8px;
+  padding: 4px;
+  margin-bottom: 4px;
+}
+
+/* 二级菜单项：圆角 + 左缩进，层级清晰 */
+.aside .menu .el-menu--inline .el-menu-item {
+  min-width: 0;
+  margin-bottom: 2px;
+  padding-left: 40px !important;
+}
+
+/* hover：半透明白高亮（由 --el-menu-hover-bg-color 驱动，
+   此处兜底覆盖子菜单标题等直接书写 background 的场景） */
+.aside .menu .el-menu-item:hover,
+.aside .menu .el-sub-menu__title:hover {
+  background-color: var(--sidebar-hover);
+  color: #fff;
+}
+
+/* 选中态：医疗蓝渐变背景 + 白色文字 + 柔和发光，突出显示 */
+.aside .menu .el-menu-item.is-active {
+  color: #fff;
+  font-weight: 500;
+  background: linear-gradient(
+    90deg,
+    rgba(46, 124, 246, 0.9),
+    rgba(52, 179, 130, 0.65)
+  );
+  box-shadow: 0 3px 10px rgba(46, 124, 246, 0.35);
+}
+
+/* 子菜单组展开时，其标题同步高亮，保持视觉一致 */
+.aside .menu .el-sub-menu.is-open > .el-sub-menu__title {
+  color: #fff;
+}
+
+/* 弹出式子菜单（侧栏折叠后悬浮展开）：同样深色，且由 CSS 变量继承主题 */
+.el-menu--popup {
+  --el-menu-bg-color: var(--submenu-bg);
+  --el-menu-text-color: var(--sidebar-text);
+  --el-menu-hover-text-color: #ffffff;
+  --el-menu-hover-bg-color: var(--sidebar-hover);
+  --el-menu-active-color: #ffffff;
+  background-color: var(--submenu-bg);
+  border: none;
+  border-radius: 10px;
+}
+.el-menu--popup .el-menu-item {
+  border-radius: 6px;
+  margin: 0 4px 2px;
+}
