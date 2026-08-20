@@ -7,8 +7,7 @@
           <el-icon :size="20"><FirstAidKit /></el-icon>
         </div>
         <div v-if="!isCollapse" class="logo-text">
-          <div class="logo-name">AI 养老社区</div>
-          <div class="logo-sub">智能管理端</div>
+          <div class="logo-name">养老社区管理后台</div>
         </div>
       </div>
       <el-scrollbar class="menu-scroll">
@@ -58,21 +57,11 @@
         </div>
 
         <div class="header-right">
-          <span class="header-clock">{{ clockText }}</span>
-
           <el-tooltip content="消息中心" placement="bottom">
             <div class="header-action" @click="router.push('/message')">
               <el-badge :value="unreadCount" :hidden="!unreadCount" :max="99">
                 <el-icon :size="18"><Bell /></el-icon>
               </el-badge>
-            </div>
-          </el-tooltip>
-
-          <el-tooltip :content="isFullscreen ? '退出全屏' : '全屏'" placement="bottom">
-            <div class="header-action" @click="toggleFullscreen">
-              <el-icon :size="18">
-                <component :is="isFullscreen ? 'CopyDocument' : 'FullScreen'" />
-              </el-icon>
             </div>
           </el-tooltip>
 
@@ -119,7 +108,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, computed, onMounted, onBeforeUnmount } from 'vue'
+import { ref, reactive, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
 import { FirstAidKit, Bell, ArrowDown } from '@element-plus/icons-vue'
@@ -183,31 +172,8 @@ const avatarText = computed(() => {
 // ===== 侧栏折叠 =====
 const isCollapse = ref(false)
 
-// ===== Header 时钟 =====
-const WEEKS = ['日', '一', '二', '三', '四', '五', '六']
-const clockText = ref('')
-let clockTimer = null
-
-function updateClock() {
-  const d = new Date()
-  const pad = (n) => String(n).padStart(2, '0')
-  clockText.value = `${d.getFullYear()}年${pad(d.getMonth() + 1)}月${pad(d.getDate())}日 星期${WEEKS[d.getDay()]} ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`
-}
-
 // ===== 消息角标（TODO: 待后端未读消息接口提供后替换）=====
 const unreadCount = ref(3)
-
-// ===== 全屏切换 =====
-const isFullscreen = ref(false)
-function toggleFullscreen() {
-  if (!document.fullscreenElement) {
-    document.documentElement.requestFullscreen?.()
-    isFullscreen.value = true
-  } else {
-    document.exitFullscreen?.()
-    isFullscreen.value = false
-  }
-}
 
 // ===== 修改密码 =====
 const pwdVisible = ref(false)
@@ -248,12 +214,6 @@ async function handleCommand(command) {
     router.replace('/login')
   }
 }
-
-onMounted(() => {
-  updateClock()
-  clockTimer = setInterval(updateClock, 1000)
-})
-onBeforeUnmount(() => clearInterval(clockTimer))
 </script>
 
 <style scoped>
@@ -265,7 +225,7 @@ onBeforeUnmount(() => clearInterval(clockTimer))
 .aside {
   display: flex;
   flex-direction: column;
-  background: linear-gradient(180deg, var(--sidebar-bg) 0%, var(--sidebar-bg-deep) 100%);
+  background: var(--sidebar-bg);
   transition: width 0.25s ease;
   overflow: hidden;
 }
@@ -283,23 +243,17 @@ onBeforeUnmount(() => clearInterval(clockTimer))
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 34px;
-  height: 34px;
-  border-radius: 9px;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--ec-radius-md);
   color: #fff;
-  background: linear-gradient(135deg, var(--ec-primary), var(--ec-green));
-  box-shadow: 0 3px 8px rgba(46, 124, 246, 0.4);
+  background: var(--ec-primary);
 }
 .logo-name {
   font-size: 15px;
   font-weight: 600;
   color: #fff;
   line-height: 1.2;
-  white-space: nowrap;
-}
-.logo-sub {
-  font-size: 11px;
-  color: rgba(255, 255, 255, 0.45);
   white-space: nowrap;
 }
 .menu-scroll {
@@ -322,7 +276,6 @@ onBeforeUnmount(() => clearInterval(clockTimer))
   justify-content: space-between;
   background: #fff;
   border-bottom: 1px solid var(--ec-border);
-  box-shadow: 0 1px 4px rgba(46, 90, 170, 0.05);
 }
 .header-left {
   display: flex;
@@ -348,12 +301,6 @@ onBeforeUnmount(() => clearInterval(clockTimer))
   display: flex;
   align-items: center;
   gap: 6px;
-}
-.header-clock {
-  margin-right: 8px;
-  font-size: 13px;
-  color: var(--ec-text-secondary);
-  font-variant-numeric: tabular-nums;
 }
 .header-action {
   display: flex;
@@ -386,7 +333,7 @@ onBeforeUnmount(() => clearInterval(clockTimer))
 .user-avatar {
   color: #fff;
   font-weight: 600;
-  background: linear-gradient(135deg, var(--ec-primary), var(--ec-green));
+  background: var(--ec-primary);
 }
 .user-name {
   font-size: 14px;
@@ -396,6 +343,6 @@ onBeforeUnmount(() => clearInterval(clockTimer))
 /* ===== 内容区 ===== */
 .main {
   background: var(--ec-bg-page);
-  padding: 16px;
+  padding: 20px;
 }
 </style>

@@ -5,7 +5,7 @@
 <script setup>
 import { ref, watch, onMounted, onBeforeUnmount } from 'vue'
 import * as echarts from 'echarts/core'
-import { LineChart, PieChart, GaugeChart } from 'echarts/charts'
+import { LineChart } from 'echarts/charts'
 import {
   GridComponent,
   TooltipComponent,
@@ -17,8 +17,6 @@ import { CanvasRenderer } from 'echarts/renderers'
 // 按需注册所需图表类型，控制包体
 echarts.use([
   LineChart,
-  PieChart,
-  GaugeChart,
   GridComponent,
   TooltipComponent,
   LegendComponent,

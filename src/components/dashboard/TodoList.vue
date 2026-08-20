@@ -11,7 +11,10 @@
         <el-icon :size="16"><component :is="item.icon" /></el-icon>
       </div>
       <div class="todo-body">
-        <div class="todo-title">{{ item.title }}</div>
+        <div class="todo-title">
+          {{ item.title }}
+          <span v-if="item.mock" class="todo-mock">示例</span>
+        </div>
         <div class="todo-desc">{{ item.description }}</div>
       </div>
       <el-badge v-if="item.count > 0" :value="item.count" :max="99" />
@@ -26,8 +29,8 @@ import { ArrowRight } from '@element-plus/icons-vue'
 
 defineProps({
   /**
-   * items: [{ title, description, icon, color, colorBg, count, route? }]
-   * route 存在时点击跳转
+   * items: [{ title, description, icon, color, colorBg, count, route?, mock? }]
+   * route 存在时点击跳转；mock 为 true 时标注示例数据
    */
   items: { type: Array, required: true }
 })
@@ -72,6 +75,15 @@ defineProps({
   font-size: 14px;
   font-weight: 500;
   color: var(--ec-text-primary);
+}
+.todo-mock {
+  margin-left: 6px;
+  padding: 0 4px;
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--ec-text-placeholder);
+  border: 1px solid var(--ec-border);
+  border-radius: var(--ec-radius-sm);
 }
 .todo-desc {
   margin-top: 2px;

@@ -57,20 +57,24 @@
         <el-table-column label="创建时间" width="165">
           <template #default="{ row }">{{ formatDateTime(row.createTime) }}</template>
         </el-table-column>
-        <el-table-column label="操作" fixed="right" width="270">
+        <el-table-column label="操作" fixed="right" width="120">
           <template #default="{ row }">
             <el-button link type="primary" @click="openDetail(row)">详情</el-button>
-            <el-button v-perm="'admin:member:manage'" link type="primary" @click="openLevel(row)">等级</el-button>
-            <el-button v-perm="'admin:member:manage'" link type="primary" @click="openPoints(row)">积分</el-button>
-            <el-button v-perm="'admin:member:manage'" link type="primary" @click="openReset(row)">重置密码</el-button>
-            <el-button
-              v-perm="'admin:member:manage'"
-              link
-              :type="row.status === 'ENABLED' ? 'danger' : 'success'"
-              @click="toggleStatus(row)"
-            >
-              {{ row.status === 'ENABLED' ? '禁用' : '启用' }}
-            </el-button>
+            <el-dropdown v-perm="'admin:member:manage'" @command="(c) => handleMore(c, row)">
+              <el-button link type="primary">
+                更多<el-icon class="el-icon--right"><ArrowDown /></el-icon>
+              </el-button>
+              <template #dropdown>
+                <el-dropdown-menu>
+                  <el-dropdown-item command="level">调整等级</el-dropdown-item>
+                  <el-dropdown-item command="points">调整积分</el-dropdown-item>
+                  <el-dropdown-item command="reset">重置密码</el-dropdown-item>
+                  <el-dropdown-item command="toggle" divided>
+                    {{ row.status === 'ENABLED' ? '禁用会员' : '启用会员' }}
+                  </el-dropdown-item>
+                </el-dropdown-menu>
+              </template>
+            </el-dropdown>
           </template>
         </el-table-column>
       </el-table>
@@ -247,6 +251,7 @@
 <script setup>
 import { ref, reactive, onMounted } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
+import { ArrowDown } from '@element-plus/icons-vue'
 import {
   getMemberPage,
   enableMember,
@@ -386,6 +391,14 @@ function openLevel(row) {
   current.value = row
   levelForm.memberLevel = row.memberLevel
   levelVisible.value = true
+}
+
+/** 操作列「更多」下拉命令分发 */
+function handleMore(command, row) {
+  if (command === 'level') openLevel(row)
+  else if (command === 'points') openPoints(row)
+  else if (command === 'reset') openReset(row)
+  else if (command === 'toggle') toggleStatus(row)
 }
 
 async function submitLevel() {

@@ -50,13 +50,19 @@
           <template #default="{ row }">{{ row.month }}</template>
         </el-table-column>
         <el-table-column label="均值" min-width="90">
-          <template #default="{ row }">{{ row.avg ?? '-' }}</template>
+          <template #default="{ row }">
+            <span :class="cellClass(row.indicator, row.avg)">{{ row.avg ?? '-' }}</span>
+          </template>
         </el-table-column>
         <el-table-column label="最大值" min-width="90">
-          <template #default="{ row }">{{ row.max ?? '-' }}</template>
+          <template #default="{ row }">
+            <span :class="cellClass(row.indicator, row.max)">{{ row.max ?? '-' }}</span>
+          </template>
         </el-table-column>
         <el-table-column label="最小值" min-width="90">
-          <template #default="{ row }">{{ row.min ?? '-' }}</template>
+          <template #default="{ row }">
+            <span :class="cellClass(row.indicator, row.min)">{{ row.min ?? '-' }}</span>
+          </template>
         </el-table-column>
         <el-table-column label="参考范围" min-width="160">
           <template #default="{ row }">{{ INDICATOR_RANGES[row.indicator]?.join(' ~ ') || '-' }}</template>
@@ -70,12 +76,32 @@
         <el-table-column prop="recordedTime" label="记录时间" width="165">
           <template #default="{ row }">{{ formatDateTime(row.recordedTime) }}</template>
         </el-table-column>
-        <el-table-column prop="systolic" label="收缩压(mmHg)" width="120" />
-        <el-table-column prop="diastolic" label="舒张压(mmHg)" width="120" />
-        <el-table-column prop="bloodSugar" label="空腹血糖" width="100" />
-        <el-table-column prop="heartRate" label="心率" width="90" />
+        <el-table-column label="收缩压(mmHg)" width="120">
+          <template #default="{ row }">
+            <span :class="cellClass('SYSTOLIC', row.systolic)">{{ row.systolic ?? '-' }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="舒张压(mmHg)" width="120">
+          <template #default="{ row }">
+            <span :class="cellClass('DIASTOLIC', row.diastolic)">{{ row.diastolic ?? '-' }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="空腹血糖" width="100">
+          <template #default="{ row }">
+            <span :class="cellClass('BLOOD_SUGAR', row.bloodSugar)">{{ row.bloodSugar ?? '-' }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="心率" width="90">
+          <template #default="{ row }">
+            <span :class="cellClass('HEART_RATE', row.heartRate)">{{ row.heartRate ?? '-' }}</span>
+          </template>
+        </el-table-column>
         <el-table-column prop="weight" label="体重(kg)" width="100" />
-        <el-table-column prop="bmi" label="BMI" width="90" />
+        <el-table-column label="BMI" width="90">
+          <template #default="{ row }">
+            <span :class="cellClass('BMI', row.bmi)">{{ row.bmi ?? '-' }}</span>
+          </template>
+        </el-table-column>
         <el-table-column prop="memo" label="备注" show-overflow-tooltip />
       </el-table>
       <el-pagination
@@ -116,6 +142,16 @@ const INDICATOR_TEXT = {
   BLOOD_SUGAR: '空腹血糖',
   HEART_RATE: '心率',
   BMI: 'BMI'
+}
+
+/** 指标值超出参考范围时红色标识 */
+function isAbnormal(indicator, v) {
+  const range = INDICATOR_RANGES[indicator]
+  if (!range || v === null || v === undefined || v === '') return false
+  return v < range[0] || v > range[1]
+}
+function cellClass(indicator, v) {
+  return isAbnormal(indicator, v) ? 'cell-abnormal' : ''
 }
 
 const memberLoading = ref(false)
@@ -219,6 +255,11 @@ onMounted(() => {
 .tip {
   color: #909399;
   font-size: 12px;
+}
+/* 超出参考范围的指标值 */
+.cell-abnormal {
+  color: var(--el-color-danger);
+  font-weight: 600;
 }
 .pager {
   margin-top: 14px;

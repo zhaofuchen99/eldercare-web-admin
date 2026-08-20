@@ -3,14 +3,14 @@
     <el-timeline-item
       v-for="(item, i) in items"
       :key="i"
-      :color="item.color"
+      :color="i === 0 ? 'var(--ec-primary)' : '#c9cdd4'"
       :hollow="i !== 0"
       :timestamp="item.time"
       placement="top"
     >
       <div class="activity-item">
         <span class="activity-text">{{ item.text }}</span>
-        <el-tag v-if="item.tag" size="small" :type="item.tagType || 'info'" round>
+        <el-tag v-if="item.tag" size="small" :type="item.tagType || 'info'">
           {{ item.tag }}
         </el-tag>
       </div>
@@ -20,7 +20,7 @@
 
 <script setup>
 defineProps({
-  /** items: [{ text, time, color, tag?, tagType? }] */
+  /** items: [{ text, time, tag?, tagType? }] */
   items: { type: Array, required: true }
 })
 </script>

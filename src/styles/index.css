@@ -1,59 +1,58 @@
-/* 管理端全局样式 */
+/* ============================================================
+   全局设计令牌：企业级克制风格
+   主色深蓝，中性灰背景，语义色沿用 Element Plus 默认体系。
+   原则：颜色只承载语义，不用装饰色；边框分隔为主，阴影极轻。
+   ============================================================ */
+:root {
+  /* 品牌主色：深蓝（克制、专业） */
+  --ec-primary: #2c5aa0;
+  --ec-primary-light: #6b8bbc;
+  --ec-primary-lighter: #eef3fa;
+  --ec-primary-dark: #234880;
+
+  /* 行业辅助色：健康绿（仅用于正向语义，低饱和） */
+  --ec-green: #2f9e77;
+  --ec-green-light: #e8f5f0;
+
+  /* 语义色（与 Element Plus 对齐） */
+  --ec-warning: #e6a23c;
+  --ec-warning-light: #fbf3e4;
+  --ec-danger: #f56c6c;
+  --ec-danger-light: #fdecec;
+
+  /* 中性色 */
+  --ec-text-primary: #1f2733;
+  --ec-text-regular: #4e5969;
+  --ec-text-secondary: #8a919c;
+  --ec-text-placeholder: #b7bdc7;
+  --ec-border: #e5e8ee;
+  --ec-border-light: #f0f2f5;
+  --ec-bg-page: #f5f6f8;
+  --ec-bg-card: #ffffff;
+  --ec-bg-header: #f7f8fa;
+
+  /* 圆角与阴影：适中圆角、极轻阴影 */
+  --ec-radius-sm: 4px;
+  --ec-radius-md: 6px;
+  --ec-radius-lg: 8px;
+  --ec-shadow-card: 0 1px 2px rgba(16, 24, 40, 0.04);
+
+  /* Element Plus 主题覆写 */
+  --el-color-primary: var(--ec-primary);
+  --el-color-primary-light-3: #6b8bbc;
+  --el-color-primary-light-5: #95accf;
+  --el-color-primary-light-7: #bfcde2;
+  --el-color-primary-light-8: #cfdfec;
+  --el-color-primary-light-9: #e8eef7;
+  --el-color-primary-dark-2: var(--ec-primary-dark);
+  --el-border-radius-base: 4px;
+  --el-border-radius-small: 3px;
+}
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-}
-
-/* ============================================================
-   设计令牌：医疗蓝 + 养老绿主题（温暖、专业、适老化）
-   ============================================================ */
-:root {
-  /* 品牌主色：医疗蓝 */
-  --ec-primary: #2e7cf6;
-  --ec-primary-light: #5a9bfa;
-  --ec-primary-lighter: #eaf2fe;
-  --ec-primary-dark: #1a63d8;
-
-  /* 行业辅助色：养老绿（健康/安全） */
-  --ec-green: #34b382;
-  --ec-green-light: #e8f7f1;
-
-  /* 语义色（柔和，避免过强刺激） */
-  --ec-warning: #f5a623;
-  --ec-warning-light: #fdf3e3;
-  --ec-danger: #f56c6c;
-  --ec-danger-light: #fdeaea;
-  --ec-purple: #8b7cf6;
-  --ec-purple-light: #f0eeff;
-  --ec-cyan: #22b8cf;
-  --ec-cyan-light: #e6f7fa;
-
-  /* 中性色 */
-  --ec-text-primary: #303845;
-  --ec-text-regular: #5c6675;
-  --ec-text-secondary: #8a93a3;
-  --ec-text-placeholder: #b6bcc8;
-  --ec-border: #e8ecf3;
-  --ec-bg-page: #f3f6fb;
-  --ec-bg-card: #ffffff;
-
-  /* 圆角与阴影 */
-  --ec-radius-sm: 6px;
-  --ec-radius-md: 10px;
-  --ec-radius-lg: 14px;
-  --ec-shadow-card: 0 2px 12px rgba(46, 90, 170, 0.06);
-  --ec-shadow-hover: 0 8px 24px rgba(46, 90, 170, 0.14);
-
-  /* Element Plus 主题覆写 */
-  --el-color-primary: var(--ec-primary);
-  --el-color-primary-light-3: #639df8;
-  --el-color-primary-light-5: #96bcfb;
-  --el-color-primary-light-7: #c3d8fd;
-  --el-color-primary-light-8: #d9e7fe;
-  --el-color-primary-light-9: var(--ec-primary-lighter);
-  --el-color-primary-dark-2: var(--ec-primary-dark);
-  --el-border-radius-base: 8px;
 }
 
 html,
@@ -61,7 +60,9 @@ body,
 #app {
   height: 100%;
   font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Microsoft YaHei', Arial, sans-serif;
+  font-size: 14px;
   color: var(--ec-text-primary);
+  -webkit-font-smoothing: antialiased;
 }
 
 a {
@@ -69,12 +70,22 @@ a {
   color: inherit;
 }
 
+/* ===== 卡片：细边框 + 轻阴影，禁止大圆角与发光 ===== */
+.el-card {
+  border-radius: var(--ec-radius-lg);
+  border-color: var(--ec-border);
+  box-shadow: var(--ec-shadow-card);
+}
+.el-card.is-hover-shadow:hover {
+  box-shadow: var(--ec-shadow-card);
+}
+
 /* 页面通用卡片间距 */
 .page-card {
   margin-bottom: 16px;
 }
 
-/* 工具条（筛选区）统一间距 */
+/* ===== 工具条（表格上方：标题 + 操作） ===== */
 .toolbar {
   display: flex;
   align-items: center;
@@ -82,15 +93,36 @@ a {
   gap: 12px;
   margin-bottom: 16px;
 }
-
-/* 全局卡片视觉统一：圆角 + 柔和阴影 */
-.el-card {
-  border-radius: var(--ec-radius-lg);
-  border-color: var(--ec-border);
-  box-shadow: var(--ec-shadow-card);
+.toolbar-title {
+  flex: 1;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ec-text-primary);
 }
 
-/* 数字滚动（统计卡片） */
-.num-anim {
-  font-variant-numeric: tabular-nums;
+/* ===== 表格：清晰表头、弱化斑马纹、数字等宽 ===== */
+.el-table {
+  --el-table-header-bg-color: var(--ec-bg-header);
+  --el-table-row-hover-bg-color: #f5f7fa;
+  --el-table-tr-bg-color: transparent;
+  font-size: 13px;
+}
+.el-table th.el-table__cell {
+  color: var(--ec-text-regular);
+  font-weight: 600;
+}
+.el-table--striped .el-table__body tr.el-table__row--striped td.el-table__cell {
+  background: #fafbfc;
+}
+
+/* ===== 状态标签：统一小圆角 ===== */
+.el-tag {
+  border-radius: var(--ec-radius-sm);
+}
+
+/* ===== 弹窗 / 抽屉标题层级 ===== */
+.el-dialog__title,
+.el-drawer__title {
+  font-weight: 600;
+  color: var(--ec-text-primary);
 }
